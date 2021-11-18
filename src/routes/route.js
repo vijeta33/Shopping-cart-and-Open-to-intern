@@ -17,7 +17,5 @@ router.post('/createUser',  UserController.createUser  );
 router.get('/getAllUsers',  UserController.getUsersData  );
 router.post('/createAuthor', AuthorController.createAuthor);
 router.post('/createBook', BookController.createBook);
-router.get('/getAuthor', AuthorController.getAuthor);
-router.get('/getBook', BookController.getBook);
-router.get('/findBook', BookController.findBook);
+router.get('/listBook', BookController.listBook);
 module.exports = router;
