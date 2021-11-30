@@ -8,19 +8,19 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-const logDataOnConsole = function(req,res,next){
-    let date = moment.utc().format('YYY-MM-DD HH:mm:ss');
-    let stillUtc = moment.utc(date).toDate();
-    let local = moment(stillUtc).local().format('YYY-MM-DD HH:mm:ss');
-    console.log(local);
-    console.log(req.ip);
-    console.log(req.url);
-    next();
-}
-app.use(logDataOnConsole)
+// const logDataOnConsole = function(req,res,next){
+//     let date = moment.utc().format('YYY-MM-DD HH:mm:ss');
+//     let stillUtc = moment.utc(date).toDate();
+//     let local = moment(stillUtc).local().format('YYY-MM-DD HH:mm:ss');
+//     console.log(local);
+//     console.log(req.ip);
+//     console.log(req.url);
+//     next();
+// }
+// app.use(logDataOnConsole)
 const mongoose = require('mongoose')
 
-mongoose.connect("mongodb+srv://users-open-to-all:hiPassword123@cluster0.uh35t.mongodb.net/RahulKumar-DB?retryWrites=true&w=majority", {useNewUrlParser: true})
+mongoose.connect("mongodb+srv://users-open-to-all:hiPassword123@cluster0.uh35t.mongodb.net/TEAM-IRS-DB?retryWrites=true&w=majority", {useNewUrlParser: true})
     .then(() => console.log('mongodb running on 27017'))
     .catch(err => console.log(err))
 

@@ -2,9 +2,29 @@ const mongoose=require('mongoose')
 const  authorSchema = new mongoose.Schema({
    
     
-    author_name : String,
-    age : Number,
-    address : String
-})
+    fname: { 
+        type:String,
+       required: true
+    }, 
+    lname: { 
+        type:String,
+       required: true
+    }, 
+    title: {
+        type:String,
+        required: true, 
+        enum:["Mr", "Mrs", "Miss"]
+    }, 
+    email: {        
+        type:String,
+        required: true, 
+        unique: true}, 
+    password: {
+        type:String,
+        required: true
+    } 
 
-module.exports=mongoose.model('myAuthor', authorSchema)
+
+}, {timestamps: true} )
+
+module.exports = mongoose.model( 'Author',authorSchema )
