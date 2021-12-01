@@ -18,11 +18,12 @@ router.get('/test-me', function (req, res) {
 });
 
 
-router.post('/createAuthor',Middleware.validation, AuthorController.createAuthor);
-router.post('/createBlogs',BlogController.createBlogs)
-router.get('/getBlog',BlogController.getBlog)
-router.put('/updateBlog/:blogId',BlogController.updateBlog)
-router.delete('/blogs/:blogId',BlogController.deleteBlogsWithId )
-router.delete('/blogs',BlogController.deleteBlogsWithQuery )
+router.post('/createAuthor',Middleware.emailValidation, AuthorController.createAuthor);
+router.post('/createBlogs',Middleware.checkAuthentication,BlogController.createBlogs)
+router.get('/getBlog',Middleware.checkAuthentication,BlogController.getBlogs)
+router.put('/updateBlog/:blogId',Middleware.checkAuthentication,BlogController.updateBlog)
+router.delete('/blogs/:blogId',Middleware.checkAuthentication,BlogController.deleteBlogsWithId )
+router.delete('/blogs',Middleware.checkAuthentication,BlogController.deleteBlogsWithQuery )
+router.post('/login',AuthorController.login)
 
 module.exports = router;
