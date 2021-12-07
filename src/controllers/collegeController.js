@@ -1,61 +1,61 @@
 const CollegeModel = require("../models/collegeModel.js");
 const internModel = require("../models/internModel.js");
 
-const isValid = function (value, type) {
+const isValid = function(value, type) {
     if (typeof value === 'undefined' || value === null) return false
     if (typeof value === type && value.trim().length === 0) return false
+    if (typeof value != type) return false
     return true;
 }
-const isValidRequestBody = function (requestBody) {
+const isValidRequestBody = function(requestBody) {
     return Object.keys(requestBody).length > 0
 }
-// const isValidName = function (value) {
-//     if (typeof value === 'undefined' || value === null) return false
-//     if (typeof value === 'string' && value.trim().length === 0 || value.trim().split(" ").length > 1) return false
-//     return true;
-// }
 
+//API - 1 Register College
 
-const registerCollege = async function (req, res) {
-    try {
-        let requestBody = req.body;
-        if (!isValidRequestBody(requestBody)) {
-            res.status(400).send({ status: false, message: 'Invalid request parameters. Please provide College details' })
-            return
+const registerCollege = async function(req, res) {
+        try {
+            let requestBody = req.body;
+            if (!isValidRequestBody(requestBody)) {
+                res.status(400).send({ status: false, message: 'Body cannot be empty, Please provide College details' })
+                return
+            }
+            //Extract params
+            const { name, fullName, logoLink } = requestBody; //destructuring
+
+            // Validation starts
+            if (!isValid(name, "string")) {
+                res.status(400).send({ status: false, message: 'Name is required or invalid name' })
+                return
+            }
+            if (!isValid(fullName, "string")) {
+                res.status(400).send({ status: false, message: 'Full name is required or invalid full name' })
+                return
+            }
+            if (!isValid(logoLink, "string")) {
+                res.status(400).send({ status: false, message: 'Logo link is required or invalid logo link' })
+                return
+            }
+            const isNameAlreadyUsed = await CollegeModel.findOne({ name });
+
+            if (isNameAlreadyUsed) {
+                res.status(400).send({ status: false, message: `${name} college is already registered` })
+            }
+
+            const collegeData = { name, fullName, logoLink } //
+            const newCollege = await CollegeModel.create(collegeData)
+
+            res.status(201).send({ status: true, message: `College created successfully`, data: newCollege });
+        } catch (error) {
+            res.status(500).send({ status: false, message: error.message })
         }
-        //Extract params
-        const { name, fullName, logoLink } = requestBody; //destructuring
-
-        // Validation starts
-        if (!isValid(name, "string")) {
-            res.status(400).send({ status: false, message: 'Name is required' })
-            return
-        }
-        if (!isValid(fullName, "string")) {
-            res.status(400).send({ status: false, message: 'Full name is required' })
-            return
-        }
-        if (!isValid(logoLink, "string")) {
-            res.status(400).send({ status: false, message: 'Logo link is required' })
-            return
-        }
-        const isNameAlreadyUsed = await CollegeModel.findOne({ name });
-
-        if (isNameAlreadyUsed) {
-            res.status(400).send({ status: false, message: `${name} name is already registered` })
-        }
-
-        const collegeData = { name, fullName, logoLink } //
-        const newCollege = await CollegeModel.create(collegeData)
-
-        res.status(201).send({ status: true, message: `College created successfully`, data: newCollege });
-    } catch (error) {
-        res.status(500).send({ status: false, message: error.message })
     }
-}
-//***************************************************GET COLLEGE DETAILS */********************* */
+    //***************************************************GET COLLEGE DETAILS */********************* */
 
-const collegeDetails = async function (req, res) {
+
+//API - 3 Get college details
+
+const collegeDetails = async function(req, res) {
     try {
         //validation starts
 
@@ -65,12 +65,12 @@ const collegeDetails = async function (req, res) {
 
         }
         const collegeNames = req.query.collegeName
-        if (!isValid(collegeNames,"string")) {
+        if (!isValid(collegeNames, "string")) {
             return res.status(400).send({ status: false, message: 'Not a valid name' })
         }
 
 
-        const collegedetail = await CollegeModel.findOne({ name: collegeNames,isDeleted:false })
+        const collegedetail = await CollegeModel.findOne({ name: collegeNames, isDeleted: false })
         if (!collegedetail) {
             return res.status(400).send({ status: false, message: 'No college found with this name' })
 
@@ -80,8 +80,8 @@ const collegeDetails = async function (req, res) {
         //console.log(collegedetail)
         const ID = collegedetail._id
         console.log(ID)
-        const interns = await internModel.find({ collegeId: ID,isDeleted:false }).select({ name: 1, email: 1, mobile: 1, _id: 0 })
-        //console.log(interns)
+        const interns = await internModel.find({ collegeId: ID, isDeleted: false }).select({ name: 1, email: 1, mobile: 1 })
+            //console.log(interns)
         if (interns.length === 0) {
             let arr = {
                 name: collegedetail.name,
@@ -112,21 +112,3 @@ const collegeDetails = async function (req, res) {
 
 
 module.exports = { registerCollege, collegeDetails }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
