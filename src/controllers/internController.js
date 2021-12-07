@@ -10,7 +10,7 @@
      return Object.keys(requestBody).length > 0
  }
 
- //API 2 -Register Intern!
+ //API 2 -Register Intern!//
 
  const registerIntern = async function(req, res) {
      try {
