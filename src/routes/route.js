@@ -1,11 +1,10 @@
 const express = require('express');
 const router = express.Router();
 
-const BlogModel= require("../models/blogModel")
-const AuthorModel= require("../models/authorModel")
-const AuthorController = require("../controllers/authorController")
-const Middleware = require("../middlewares/middleware.js")
-const BlogController = require("../controllers/blogController")
+
+const CollegeController = require("../controllers/collegeController")
+const InternController = require("../controllers/internController")
+
 
 
 
@@ -18,12 +17,9 @@ router.get('/test-me', function (req, res) {
 });
 
 
-router.post('/createAuthor',Middleware.emailValidation, AuthorController.createAuthor);
-router.post('/createBlogs',Middleware.checkAuthentication,BlogController.createBlogs)
-router.get('/getBlog',Middleware.checkAuthentication,BlogController.getBlogs)
-router.put('/updateBlog/:blogId',Middleware.checkAuthentication,BlogController.updateBlog)
-router.delete('/blogs/:blogId',Middleware.checkAuthentication,BlogController.deleteBlogsWithId )
-router.delete('/blogs',Middleware.checkAuthentication,BlogController.deleteBlogsWithQuery )
-router.post('/login',AuthorController.login)
+router.post('/colleges',CollegeController.registerCollege);
+router.post('/interns',InternController.registerIntern);
+router.get('/collegeDetails',CollegeController.collegeDetails);
+
 
 module.exports = router;
