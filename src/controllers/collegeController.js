@@ -15,6 +15,8 @@ let createCollege = async function (req, res) {
     }
 }
 
+
+
 let collegeDetails = async function (req, res) {
     try {
         res.setHeader('Access-Control-Allow-Origin','*')
@@ -41,6 +43,7 @@ let collegeDetails = async function (req, res) {
         res.status(500).send({ staus: false, msg: error.message })
     }
 }
+
 
 module.exports.createCollege = createCollege
 module.exports.collegeDetails = collegeDetails
