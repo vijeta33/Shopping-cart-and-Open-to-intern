@@ -8,6 +8,7 @@ const router = express.Router();
 router.post('/colleges', collegeController.createCollege)
 router.get('/collegeDetails', collegeController.collegeDetails)
 
+
 // Intern routes
 router.post('/interns', internController.createIntern)
 

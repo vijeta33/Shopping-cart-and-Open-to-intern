@@ -16,7 +16,6 @@ let createCollege = async function (req, res) {
 }
 
 
-
 let collegeDetails = async function (req, res) {
     try {
         res.setHeader('Access-Control-Allow-Origin','*')
