@@ -75,7 +75,7 @@ const createCart = async (req, res) => {
 const updateCart = async (req, res) => {
     try {
         let { cartId, productId, removeProduct } = req.body
-        let checkId1 = ObjectId.isValid(cartId);
+        let checkId1 = ObjectId.isValid(cartId); 
         if (!checkId1) { 
             return res.status(400).send({ status: false, message: "Please Provide a valid cartId" });;
         }
@@ -93,6 +93,7 @@ const updateCart = async (req, res) => {
         let len = isDBexists.items.length;
         for (let i = 0; i < len; i++) {  // we are checking that the product that we are sending from request body is exist in our items of cart model 
             if (productId == isDBexists.items[i].productId) {    // the client is suggesting us for decrementation of one quantity of the product from the cart
+
                 if (removeProduct == 1) {
                     let product = await productModel.findOne({ _id: productId, isDeleted: false }); // => isdeleted added
                     if (!product) { 

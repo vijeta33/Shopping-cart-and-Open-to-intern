@@ -8,6 +8,9 @@ const createProduct = async (req, res) => {
         let product = JSON.parse(req.body.data)
         let { title, description, style, price, availableSizes } = product;
         let files = req.files
+        if(!files[0]){
+            return res.status(400).send({status:false,msg:"Please provide product image file"})
+        }
         const productImage = await aws.uploadFile(files[0])
         let currencyId = "INR"
         let currencyFormat = "₹"
@@ -88,19 +91,17 @@ const updateProductById = async (req, res) => {
         }
         let updateBody = JSON.parse(req.body.data)
         let files = req.files
-        const productImage = await aws.uploadFile(files[0])
-        let { title, description, price, style, availableSizes, installments } = updateBody
-        const duplicateTitle = await productModel.findOne({ title: title })
-        if (duplicateTitle) {
-            return res.status(400).send({ status: false, message: "This title is already exists with another product" });
+        let productImage
+        if(files[0]){
+             productImage = await aws.uploadFile(files[0])
         }
+        let { title, description, price, style, availableSizes, installments } = updateBody
         let updateProduct = await productModel.findOneAndUpdate({ _id: paramsId }, { title: title, description: description, price: price, productImage: productImage, style: style, availableSizes: availableSizes, installments: installments }, { new: true })
         return res.status(200).send({ status: true, message: 'Success', data: updateProduct });
     } catch (err) {
         return res.status(500).send({ message: err.message });
     }
 };
-
 
 const deleteProductById = async (req, res) => {
     try {

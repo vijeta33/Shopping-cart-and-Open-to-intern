@@ -15,19 +15,23 @@ const myMiddleware = require('../middleWares/middleWare');
 const validator = require('../validation/validation');
 
 router.post("/write-file-aws", AWSController.myAws) // 0 - post
+//-------------------------------USer routes--------------------//
 router.post('/register', validator.checkUser, userController.createUser) // 1 - post 
 router.post('/login', userController.userLogin) // 2 - post 
 router.get('/user/:userId/profile', myMiddleware.checkLogin, userController.getuserById) // 3 - get - protected
 router.put('/user/:userId/profile', myMiddleware.checkLogin, validator.checkUserupdate, userController.updateProfile) // 4 - put - protected
+//--------------------------Product Routes----------------------------//
 router.post('/products', validator.checkProduct, productController.createProduct) // 5 - post
 router.get('/products', productController.productByQuery) // 6 - get
 router.get('/products/:productId', productController.productByParams) // 7 - get 
 router.put('/products/:productId', validator.checkProductUpdate, productController.updateProductById) // 8 - put
 router.delete('/products/:productId', productController.deleteProductById) // 9 - delete
+//-----------------------------Cart routes---------------//
 router.post('/users/:userId/cart', myMiddleware.checkLogin, validator.authorizer, cartController.createCart) // 10 - post - protected
 router.put('/users/:userId/cart', myMiddleware.checkLogin, validator.authorizer, cartController.updateCart) // 11 - put - protected
 router.get('/users/:userId/cart', myMiddleware.checkLogin, validator.authorizer, cartController.getCart) // 12 - get - protected
 router.delete('/users/:userId/cart', myMiddleware.checkLogin, validator.authorizer, cartController.deleteCart) // 13 - delete - protected
+//----------------------------------Order routes-----------------------------//
 router.post('/users/:userId/orders', myMiddleware.checkLogin, validator.authorizer, orderController.creatOrder) // 14 - post - protected
 router.put('/users/:userId/orders', myMiddleware.checkLogin, validator.checkOrder, orderController.cancelOrder) // 15 - put - protected
 

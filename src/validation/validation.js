@@ -5,9 +5,6 @@ const cartModel = require('../models/cartModel');
 const orderModel = require('../models/orderModel');
 const ObjectId = require('mongoose').Types.ObjectId;
 
-// const {Validation} = require
-// Validation.bad_request
-
 //---------------------------------------Validation-Function-------------------------------------//
 
 const isValid = function (value) {
