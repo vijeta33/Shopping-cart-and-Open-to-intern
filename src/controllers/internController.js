@@ -1,14 +1,15 @@
  const CollegeModel = require("../models/collegeModel.js")
  const InternModel = require("../models/internModel.js")
 
- const isValid = function(value) {
-     if (typeof value === 'undefined' || value === null) return false
-     if (typeof value === 'string' && value.trim().length === 0) return false
-     return true;
- }
- const isValidRequestBody = function(requestBody) {
-     return Object.keys(requestBody).length > 0
- }
+ const isValid = function (value) {
+    if (typeof value === 'undefined' || value === null) return false
+    if (typeof value === 'string' && value.length === 0) return false
+    return true;
+}
+
+const isValidRequestBody = function (requestBody) {
+    return Object.keys(requestBody).length > 0;
+}
 
  //API 2 -Register Intern!//
 
@@ -68,16 +69,14 @@
          }
          const collegeNames = req.body.collegeName
          const college = await CollegeModel.findOne({ name: collegeNames })
-         if (!college) {
+        if (!college) {
              return res.status(404).send({ status: false, message: 'College details not found from your CollegeName' })
          }
-         // console.log(college)
+         
          const iD = college._id
-         console.log(requestBody)
          let collegeId = iD
+         console.log(collegeId)
          requestBody.collegeId = iD
-         console.log(requestBody)
-
          const internData = { name, email, mobile, collegeId }
          const newIntern = await InternModel.create(internData)
 

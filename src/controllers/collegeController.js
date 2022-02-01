@@ -1,14 +1,14 @@
 const CollegeModel = require("../models/collegeModel.js");
 const internModel = require("../models/internModel.js");
 
-const isValid = function(value, type) {
+const isValid = function (value) {
     if (typeof value === 'undefined' || value === null) return false
-    if (typeof value === type && value.trim().length === 0) return false
-    if (typeof value != type) return false
+    if (typeof value === 'string' && value.length === 0) return false
     return true;
 }
-const isValidRequestBody = function(requestBody) {
-    return Object.keys(requestBody).length > 0
+
+const isValidRequestBody = function (requestBody) {
+    return Object.keys(requestBody).length > 0;
 }
 
 //API - 1 Register College
@@ -24,15 +24,15 @@ const registerCollege = async function(req, res) {
             const { name, fullName, logoLink } = requestBody; //destructuring
 
             // Validation starts
-            if (!isValid(name, "string")) {
+            if (!isValid(name)) {
                 res.status(400).send({ status: false, message: 'Name is required or invalid name' })
                 return
             }
-            if (!isValid(fullName, "string")) {
+            if (!isValid(fullName)) {
                 res.status(400).send({ status: false, message: 'Full name is required or invalid full name' })
                 return
             }
-            if (!isValid(logoLink, "string")) {
+            if (!isValid(logoLink)) {
                 res.status(400).send({ status: false, message: 'Logo link is required or invalid logo link' })
                 return
             }
@@ -65,7 +65,7 @@ const collegeDetails = async function(req, res) {
 
         }
         const collegeNames = req.query.collegeName
-        if (!isValid(collegeNames, "string")) {
+        if (!isValid(collegeNames)) {
             return res.status(400).send({ status: false, message: 'Not a valid name' })
         }
 
@@ -90,7 +90,7 @@ const collegeDetails = async function(req, res) {
                 interns: "No one apllied in this college"
             }
 
-            // []
+            
             return res.status(200).send({ status: true, data: arr })
         }
         let arr = {
