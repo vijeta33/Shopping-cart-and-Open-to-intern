@@ -2,6 +2,7 @@ const cartModel = require('../models/cartModel');
 const productModel = require('../models/productModel');
 const ObjectId = require('mongoose').Types.ObjectId;
 
+
 const createCart = async (req, res) => {
     try {
         let paramsId = req.params.userId
@@ -70,6 +71,7 @@ const createCart = async (req, res) => {
         return res.status(500).send(err.message)
     }
 }
+
 
 
 const updateCart = async (req, res) => {

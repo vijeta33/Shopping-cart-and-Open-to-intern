@@ -47,7 +47,7 @@ const userLogin = async (req, res) => {
                 }
             });
         } else {
-            return res.status(400).send({ status: false, message: "Oops...Invalid credentials" });
+            return res.status(400).send({ status: false, message: "Invalid credentials" });
         }
     } catch (error) {
         return res.status(500).send({ status: false, message: error.message });

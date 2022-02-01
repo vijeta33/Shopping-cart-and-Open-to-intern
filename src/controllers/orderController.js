@@ -1,6 +1,7 @@
 const orderModel = require('../models/orderModel');
 const cartModel = require('../models/cartModel');
 
+
 const creatOrder = async (req, res) => {
     try {
         let cartId = req.body.cartId
@@ -29,6 +30,7 @@ const creatOrder = async (req, res) => {
         res.status(500).send(err.message)
     }
 }
+
 
 
 const cancelOrder = async (req, res) => {

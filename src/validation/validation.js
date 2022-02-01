@@ -61,13 +61,12 @@ const isDecimal = function (value) {
 
 //---------------------------------------API-Validation----------------------------------------//
 
-// i!isValid(fname) || !isValid(lname) || !isValid(lname)
 
 const checkUser = async (req, res, next) => {
     try {
 
         let myData = req.body.data
-        if (!myData) { // => added by me now 
+        if (!myData) {
             return res.status(400).send({ status: false, message: "Please provide data for successful registration" });
         }
 
@@ -307,9 +306,6 @@ const checkProductUpdate = async (req, res, next) => {
         if (!isKeyPresent(description)) {
             return res.status(400).send({ status: false, message: "Please provide description" });
         }
-        // if (!isNumber(price)) {
-        //     return res.status(400).send({ status: false, message: "Price should be a number or an integer" });;
-        // } // this validation is not working
         if (!isKeyPresent(availableSizes)) {
             return res.status(400).send({ status: false, message: "Please provide size" });
         }

@@ -115,7 +115,7 @@ const deleteProductById = async (req, res) => {
             return res.status(404).send({ status: false, message: "This product id does not exits" });
         }
         let productFound = await productModel.findOneAndUpdate({ _id: paramsId }, { isDeleted: true, deletedAt: Date() }, { new: true })
-        return res.status(200).send({ status: true, message: 'Success', data: productFound });
+        return res.status(200).send({ status: true, message: 'Product deleted Sucessfully', data: productFound });
     } catch (err) {
         return res.status(500).send({ message: err.message });
     }
